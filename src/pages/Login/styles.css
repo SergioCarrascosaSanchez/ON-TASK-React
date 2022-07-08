@@ -1,0 +1,12 @@
+.Content{
+    margin-left: 40vw;
+    margin-right: 40vw;
+    margin-top: 3vw;
+}
+nav{
+    margin: 0;
+}
+.navbarBrand{
+    margin-left: 10vw;
+    font-size: 2.7vh;
+}

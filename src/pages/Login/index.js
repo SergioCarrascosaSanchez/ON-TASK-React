@@ -13,6 +13,7 @@ export default class LoginPage extends Component {
             </nav>
             <div className="Content">
                 <Card className="cardStyle">
+                    <h2  className="pe-5 ps-5 pt-5">Inicia sesión</h2>
                     <LoginForm />
                 </Card>
             </div>

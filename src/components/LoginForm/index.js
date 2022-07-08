@@ -28,10 +28,10 @@ export default class LoginForm extends Component {
 
   render() {
     return (
-      <Form className="p-5">
+      <Form className="pe-5 ps-5 pb-5 pt-4">
       <Form.Group className="mb-3" controlId="username">
         <Form.Label>Usuario</Form.Label>
-        <Form.Control name="username" type="email" onChange={this.handleChange}/>
+        <Form.Control name="username" type="text" onChange={this.handleChange}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="password">

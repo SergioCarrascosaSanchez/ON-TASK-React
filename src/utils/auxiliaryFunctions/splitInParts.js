@@ -1,14 +1,15 @@
-export function splitInParts(arrayToSlit, n){
+export function splitInParts(arrayToSplit, n){
     let finalArray = []
     let i = 0;
-    while(i<arrayToSlit.length){
-        if(i+n > arrayToSlit.length){
-            finalArray.push(arrayToSlit.slice(i));
+    while(i<arrayToSplit.length){
+        if(i+n > arrayToSplit.length){
+            finalArray.push(arrayToSplit.slice(i));
         }
         else{
-            finalArray.push(arrayToSlit.slice(i, i+n));
+            finalArray.push(arrayToSplit.slice(i, i+n));
         }
         i=i+n;
     }
     return finalArray
+    
 }

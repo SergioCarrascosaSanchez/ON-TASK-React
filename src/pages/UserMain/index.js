@@ -115,7 +115,7 @@ export default function UserMainPage(){
             <>
             <SimpleNavBar/>
             <div className="content">
-                <h1 className="display-5">Hola, {urlParam.username}</h1>
+                <h1 className="display-5">Hola, <span className="text-primary font-weight-bold">{urlParam.username}</span></h1>
                 <h1 className="mt-4">Tus grupos</h1>
                 {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
             </div>

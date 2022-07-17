@@ -9,7 +9,7 @@ export default class index extends Component {
         super();
         this.state = {
             group : props.group,
-            array:splitInParts(props.tasks.sort(), 4)
+            array:splitInParts(props.tasks.sort((a,b)=> {return a.id - b.id}), 4)
         }
     }
 

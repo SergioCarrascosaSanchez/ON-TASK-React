@@ -7,6 +7,8 @@ function JoinGroupForm() {
     const [Group, setGroup] = useState("")
     const [Empty, setEmpty] = useState("d-none")
     const [Incorrect, setIncorrect] = useState("d-none")
+    const [AlreadyIn, setAlreadyIn] = useState("d-none")
+
     let navigate = useNavigate() 
 
     const handleChange = (event) => {
@@ -16,8 +18,9 @@ function JoinGroupForm() {
     const handleSubmit = () => {
         setEmpty("d-none")
         setIncorrect("d-none")
+        setAlreadyIn('d-none')
         if(Group === ''){
-            setEmpty("d-block")
+            setEmpty("d-block text-danger")
         }
         else{
             window.localStorage.setItem('user', 'sergio')
@@ -32,10 +35,10 @@ function JoinGroupForm() {
                     navigate(urlUser)
                 }
                 else if(response.status === 404){
-                    setIncorrect('d-block')
+                    setIncorrect('d-block text-danger')
                 }
                 else if(response.status === 400){
-                    response.text().then(text => console.log(text))
+                    setAlreadyIn('d-block text-danger')
                 }
                 else{
                     response.text().then(text => console.log(text))
@@ -49,6 +52,7 @@ function JoinGroupForm() {
         <Form className="pe-5 ps-5 pb-5 pt-4">
             <Form.Label className={Empty}>Debes rellenar todos los campos</Form.Label>
             <Form.Label className={Incorrect}>El grupo no existe</Form.Label>
+            <Form.Label className={AlreadyIn}>Ya te has unido a este grupo</Form.Label>
 
             <Form.Group className="mb-3" controlId="groupId">
                 <Form.Label>Identificador del grupo</Form.Label>

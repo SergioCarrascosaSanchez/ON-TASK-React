@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import SimpleNavBar from '../../components/SimpleNavBar';
 import ListOfSimpleTasks from '../../components/ListOfSimpleTasks'
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner, Row, Col } from 'react-bootstrap';
 import './styles.css' 
 
 export default function UserMainPage(){
@@ -101,10 +101,13 @@ export default function UserMainPage(){
             <>
             <SimpleNavBar/>
             <div className="content">
-                <h1 className="display-5 mb-4">Hola, {urlParam.username}</h1>
+                <h1 className="display-5 mb-4">Hola, <span className="text-primary">{urlParam.username}</span></h1>
                 <h4 className="mb-4">Parece que no estas en ningún grupo...</h4>
+                <Link to="/create-group">
+                    <Button className="me-4 mt-1">Crear un grupo</Button>
+                </Link>
                 <Link to="/join-group">
-                    <Button className="me-4 mt-1">Unirse a un grupo!</Button>
+                    <Button variant="outline-primary" className="me-4 mt-1">Unirse a un grupo</Button>
                 </Link>
             </div>
             </>
@@ -115,8 +118,22 @@ export default function UserMainPage(){
             <>
             <SimpleNavBar/>
             <div className="content">
-                <h1 className="display-5">Hola, <span className="text-primary font-weight-bold">{urlParam.username}</span></h1>
-                <h1 className="mt-4">Tus grupos</h1>
+                <h1 className="display-5">Hola, <span className="text-primary">{urlParam.username}</span></h1>
+                <Row>
+                    <Col className="col-4" >
+                        <h1 className="mt-4">Tus grupos</h1>
+                    </Col>
+                    <Col className="col-2">
+                        <Link to="/create-group">
+                            <Button className="mt-4">Crear un grupo</Button>
+                        </Link>
+                    </Col>
+                    <Col className="col-3">
+                        <Link to="/join-group">
+                            <Button variant="outline-primary" className="mt-4">Unirse a un grupo</Button>
+                        </Link>
+                    </Col>
+                </Row>
                 {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
             </div>
             </>

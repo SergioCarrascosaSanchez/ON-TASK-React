@@ -5,6 +5,7 @@ import MainPage from './pages/Main';
 import {Routes, Route} from 'react-router-dom';
 import UserMainPage from './pages/UserMain';
 import Prueba from './pages/Pruebas';
+import JoinGroupPage from './pages/JoinGroup';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path ='/' element={<MainPage/>}></Route>
         <Route path='/users/:username' element={<UserMainPage/>}></Route>
         <Route path='/pruebas' element={<Prueba />}></Route>
+        <Route path='/join-group' element={<JoinGroupPage/>}></Route>
       </Routes>
   );
 }

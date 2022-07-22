@@ -8,13 +8,14 @@ export default class index extends Component {
     constructor(props){
         super();
         this.state = {
+            groupId: props.groupId,
             group : props.group,
             array:splitInParts(props.tasks.sort((a,b)=> {return a.id - b.id}), 4)
         }
     }
 
     render() {
-        const url = '/groups/'+this.state.group.replace(/ /gi, "-") 
+        const url = '/groups/'+this.state.groupId
         if(this.state.array.length === 0){
             return(
                 <div>

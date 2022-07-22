@@ -134,7 +134,7 @@ export default function UserMainPage(){
                         </Link>
                     </Col>
                 </Row>
-                {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
+                {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} groupId={id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
             </div>
             </>
         )

@@ -7,6 +7,7 @@ import './styles.css'
 import SimpleTask from '../../components/SimpleTask';
 
 function GroupMainPage() {
+
     const [name, setName] = useState("")
     const [users, setUsers] = useState([])
     const [tasks, setTasks] = useState([])
@@ -47,6 +48,7 @@ function GroupMainPage() {
     }
 
     const urlParam = useParams();
+    window.localStorage.setItem("group", urlParam.groupId)
     useEffect(() => {
         setLoading(true)
         fetchData()
@@ -89,7 +91,12 @@ function GroupMainPage() {
                     </Col>
                 </Row>
                 <Row xs={1} s={2} md={4} className="gy-2 mb-5 mt-1">
-                    {users.map(user => <Col><Usercard key={"User"+user["username"]} username={user["username"]} name={user["name"]}/></Col>)}
+                    {users.map(user => 
+                        <Col>
+                            <Link to={"/users/" + user["username"]} style={{ textDecoration: 'none', color:'black' }}>
+                                <Usercard key={"User"+user["username"]} username={user["username"]} name={user["name"]}/>
+                            </Link>
+                        </Col>)}
                 </Row>
                 <Row>
                     <Col className="d-flex align-items-start col-2 mt-3">

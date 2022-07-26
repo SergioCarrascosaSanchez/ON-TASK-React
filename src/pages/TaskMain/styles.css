@@ -1,0 +1,9 @@
+.content{
+    margin-top: 6vh;
+    margin-left: 28vw;
+    margin-right: 20vw;
+}
+
+h3, h1{
+    word-wrap: break-word;
+}

@@ -24,7 +24,6 @@ function JoinGroupForm() {
             setIncorrect("d-block text-danger")
         }
         else{
-            window.localStorage.setItem('user', 'sergio')
             const url = 'http://localhost:8080/groups/'
             fetch(url, {
                     method: 'POST',

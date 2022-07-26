@@ -155,7 +155,7 @@ function CreateTaskForm() {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Descripcion</Form.Label>
-                        <Form.Control name="descripcion" type="text" onChange={handleChange}/>
+                        <Form.Control as="textarea" name="descripcion" type="text" onChange={handleChange}/>
                     </Form.Group>
                     <Button variant="primary" onClick={handleSubmit}>
                         Crear tarea

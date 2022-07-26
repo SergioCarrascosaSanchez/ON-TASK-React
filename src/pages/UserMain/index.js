@@ -72,6 +72,7 @@ export default function UserMainPage(){
 
     const urlParam = useParams();
     useEffect(() => {
+        window.localStorage.setItem('user', urlParam.username)
         setLoading(true)
         fetchData()
     }, [])

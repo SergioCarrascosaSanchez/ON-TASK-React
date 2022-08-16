@@ -12,7 +12,7 @@ function JoinGroupPage() {
             <SimpleNavBar />
         </nav>
         <div className="Content">
-            <Card className="cardStyle">
+            <Card className="cardStyle shadow">
                 <h2  className="pe-5 ps-5 pt-5">Únete a un grupo</h2>
                 <JoinGroupForm />
             </Card>

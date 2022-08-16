@@ -9,6 +9,8 @@ import './styles.css'
 
 export default class MainPage extends Component {
   render() {
+    window.localStorage.removeItem('user')
+    window.localStorage.removeItem('group')
     return (
         <div>
             <SimpleNavBar/>
@@ -18,8 +20,8 @@ export default class MainPage extends Component {
                         <img src={PrincipalImage}></img>
                     </Col>
                     <Col>
-                        <h1>Gestor de tareas</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                        <h1 className="text-primary h1MAIN">ON TASK</h1>
+                        <p className='pMAIN'><span className="text-primary spanMAIN">ON TASK</span> es un gestor de tareas sencillas para grupos de usuarios</p>
                         <Link to="/sign-up" className="buttons">
                             <Button className="me-4 mt-1">Crea tu cuenta</Button>
                         </Link>

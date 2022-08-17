@@ -14,14 +14,11 @@ export default class SimpleTask extends Component {
     }
 
     render() {
-    const url = '/tasks/'+this.state.id
     return (
-        <Link to={url} style={{ textDecoration: 'none', color:'black' }}>
-            <Card className="CardStyled">
-                <Card.Header> <h5>{this.state.title}</h5> </Card.Header>
-                <Card.Body> {this.state.description} </Card.Body>
-            </Card>
-        </Link>
+        <Card className="CardStyled">
+            <Card.Header> <h5>{this.state.title}</h5> </Card.Header>
+            <Card.Body> {this.state.description} </Card.Body>
+        </Card>
     )
   }
 }

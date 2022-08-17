@@ -33,7 +33,11 @@ export default class index extends Component {
                 </Link>
                 {this.state.array.map(taskGroup => 
                     <CardGroup key={"taskGroup"+taskGroup[0]["id"]}>
-                        {taskGroup.map(task => <SimpleTask key={"SimpleTask"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>)}
+                        {taskGroup.map(task =>
+                            <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }} onClick={() => {window.localStorage.setItem("group", this.state.groupId)}}>
+                                <SimpleTask id={task["id"]} title={task["name"]} description={task["description"]} />
+                            </Link>
+                            )}
                     </CardGroup>
                 )}
             </div>

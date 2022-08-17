@@ -9,8 +9,6 @@ import './styles.css'
 
 export default class MainPage extends Component {
   render() {
-    window.localStorage.removeItem('user')
-    window.localStorage.removeItem('group')
     return (
         <div>
             <SimpleNavBar/>

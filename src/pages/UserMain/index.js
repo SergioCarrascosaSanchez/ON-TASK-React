@@ -25,6 +25,7 @@ export default function UserMainPage(){
                 .then(data => {
                     if(data.groups.length > 0){
                         const groupArray = data.groups
+                        
                         fetch('http://localhost:8080/tasksOfuser/'+urlParam.username,{
                             method: "POST",
                             body: JSON.stringify({
@@ -40,6 +41,9 @@ export default function UserMainPage(){
                             setGroupIds(groupArray.sort())
                             setGroupNames(data.names);
                             setTasks(data.tasks);
+                            if(urlParam.username === window.localStorage.getItem("user")){
+                                window.localStorage.setItem("groups", groupArray)
+                            }
                             setLoading(false)
                             
                         })
@@ -72,8 +76,6 @@ export default function UserMainPage(){
 
     const urlParam = useParams();
     useEffect(() => {
-        window.localStorage.removeItem('user')
-        window.localStorage.setItem('user', urlParam.username)
         setLoading(true)
         fetchData()
     }, [])
@@ -99,47 +101,78 @@ export default function UserMainPage(){
         )
     }
     else if(groupIds.length === 0){
-        return(
-            <>
-            <SimpleNavBar/>
-            <div className="content">
-                <h1 className="display-5 mb-4">Hola, <span className="text-primary">{urlParam.username}</span></h1>
-                <h4 className="mb-4">Parece que no estas en ningún grupo...</h4>
-                <Link to="/create-group">
-                    <Button className="me-4 mt-1">Crear un grupo</Button>
-                </Link>
-                <Link to="/join-group">
-                    <Button variant="outline-primary" className="me-4 mt-1">Unirse a un grupo</Button>
-                </Link>
-            </div>
-            </>
-        )
+        if(urlParam.username !== window.localStorage.getItem("user")){
+            return(
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <h1 className="display-5 mb-4"><span className="text-primary">{urlParam.username}</span></h1>
+                    <h4 className="mb-4">Parece que {urlParam.username} no esta en ningún grupo...</h4>
+                </div>
+                </>
+            )
+        }
+        else{
+            return(
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <h1 className="display-5 mb-4">Hola, <span className="text-primary">{urlParam.username}</span></h1>
+                    <h4 className="mb-4">Parece que no estas en ningún grupo...</h4>
+                    <Link to="/create-group">
+                        <Button className="me-4 mt-1">Crear un grupo</Button>
+                    </Link>
+                    <Link to="/join-group">
+                        <Button variant="outline-primary" className="me-4 mt-1">Unirse a un grupo</Button>
+                    </Link>
+                </div>
+                </>
+            )
+        }
     }
     else{
-        return(
-            <>
-            <SimpleNavBar/>
-            <div className="content">
-                <h1 className="display-5">Hola, <span className="text-primary">{urlParam.username}</span></h1>
-                <Row>
-                    <Col className="col-4" >
-                        <h1 className="mt-4">Tus grupos</h1>
-                    </Col>
-                    <Col className="col-2">
-                        <Link to="/create-group">
-                            <Button className="mt-4">Crear un grupo</Button>
-                        </Link>
-                    </Col>
-                    <Col className="col-3">
-                        <Link to="/join-group">
-                            <Button variant="outline-primary" className="mt-4">Unirse a un grupo</Button>
-                        </Link>
-                    </Col>
-                </Row>
-                {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} groupId={id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
-            </div>
-            </>
-        )
+        if(urlParam.username !== window.localStorage.getItem("user")){
+            return(
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <h1 className="display-5"><span className="text-primary">{urlParam.username}</span></h1>
+                    <Row>
+                        <Col>
+                            <h1 className="mt-4">Sus grupos y tareas</h1>
+                        </Col>
+                    </Row>
+                    {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} groupId={id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
+                </div>
+                </>
+            )
+        }
+        else{
+            return(
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <h1 className="display-5">Hola, <span className="text-primary">{urlParam.username}</span></h1>
+                    <Row>
+                        <Col className="col-4" >
+                            <h1 className="mt-4">Tus grupos</h1>
+                        </Col>
+                        <Col className="col-2">
+                            <Link to="/create-group">
+                                <Button className="mt-4">Crear un grupo</Button>
+                            </Link>
+                        </Col>
+                        <Col className="col-3">
+                            <Link to="/join-group">
+                                <Button variant="outline-primary" className="mt-4">Unirse a un grupo</Button>
+                            </Link>
+                        </Col>
+                    </Row>
+                    {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} groupId={id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}
+                </div>
+                </>
+            )
+        }
     }
     
 }

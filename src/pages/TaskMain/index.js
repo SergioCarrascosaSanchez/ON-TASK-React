@@ -86,41 +86,70 @@ function TaskMainPage() {
         )
     }
     else{
-        return (
-            <>
-            <SimpleNavBar/>
-            <div className="content">
-                <Row className="mb-3">
-                    <Col className="col-7">
-                        <h1>{name}</h1>
-                    </Col>
-                    <Col className="">
-                        <Button variant="primary" className="mb-4" onClick={completedOnClick}>Tarea completada!</Button>
-                    </Col>
-                    <Col className="">
-                        <Link to={"/edit-task/"+urlParams.task}>
-                            <Button variant="outline-primary" className="mb-4">Editar tarea</Button>
-                        </Link>
-                    </Col>
-                    
-                </Row>
-                <Row>
-                    <h4 className="text-muted">Usuarios asignados:</h4>
-                </Row>
-                <Row xs={1} s={2} md={4} className="gy-2 mb-5 mt-1">
-                    {users.map(user => 
-                        <Col key={"Col-"+user["username"]}>
-                            <Link to={"/users/" + user["username"]} style={{ textDecoration: 'none', color:'black' }}>
-                                <UserCard key={"User-"+user["username"]} username={user["username"]} name={user["name"]}/>
-                            </Link>
-                        </Col>)}
-                </Row>
-                <div className="">
-                    <h3>{description}</h3>
+        if(!users.map(user => user.username).includes(window.localStorage.getItem("user"))){
+            return (
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <Row className="mb-3">
+                        <Col className="col-7">
+                            <h1>{name}</h1>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <h4 className="text-muted">Usuarios asignados:</h4>
+                    </Row>
+                    <Row xs={1} s={2} md={4} className="gy-2 mb-5 mt-1">
+                        {users.map(user => 
+                            <Col key={"Col-"+user["username"]}>
+                                <Link to={"/users/" + user["username"]} style={{ textDecoration: 'none', color:'black' }}>
+                                    <UserCard key={"User-"+user["username"]} username={user["username"]} name={user["name"]}/>
+                                </Link>
+                            </Col>)}
+                    </Row>
+                    <div className="">
+                        <h3>{description}</h3>
+                    </div>
                 </div>
-            </div>
-            </>
-        );
+                </>
+            );
+        }
+        else{
+            return (
+                <>
+                <SimpleNavBar/>
+                <div className="content">
+                    <Row className="mb-3">
+                        <Col className="col-7">
+                            <h1>{name}</h1>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" className="mb-4" onClick={completedOnClick}>Tarea completada!</Button>
+                        </Col>
+                        <Col>
+                            <Link to={"/edit-task/"+urlParams.task}>
+                                <Button variant="outline-primary" className="mb-4">Editar tarea</Button>
+                            </Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <h4 className="text-muted">Usuarios asignados:</h4>
+                    </Row>
+                    <Row xs={1} s={2} md={4} className="gy-2 mb-5 mt-1">
+                        {users.map(user => 
+                            <Col key={"Col-"+user["username"]}>
+                                <Link to={"/users/" + user["username"]} style={{ textDecoration: 'none', color:'black' }}>
+                                    <UserCard key={"User-"+user["username"]} username={user["username"]} name={user["name"]}/>
+                                </Link>
+                            </Col>)}
+                    </Row>
+                    <div className="">
+                        <h3>{description}</h3>
+                    </div>
+                </div>
+                </>
+            );
+        }
     }
 }
 

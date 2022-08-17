@@ -4,6 +4,7 @@ nav{
 .navbarBrand{
     margin-left: 10vw;
     font-size: 2.7vh;
+    font-weight: bold;
 }
 .rowSytle{
     margin-top: 7vw;
@@ -11,16 +12,23 @@ nav{
     margin-right: auto;
     align-items: center;
 }
-h1{
-    font-size: 10vh;
+.h1MAIN{
+    font-size: 7vh !important;
+    font-weight: bold !important;
+    margin-bottom: 4vh !important;
 }
-p{
-    font-size: 2vh;
+
+.spanMAIN{ 
+    font-weight: bold !important;
+}
+.pMAIN{
+    font-size: 3.5vh !important;
+    margin-bottom: 4vh !important;
 }
 @media (min-width: 820px) { 
     img{
-        width: 100%;
-        height: 100%
+        width: 85%;
+        height: 85%
     }
 }
 

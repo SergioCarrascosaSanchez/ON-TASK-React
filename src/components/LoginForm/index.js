@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 import {Form, Button} from 'react-bootstrap'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
 export default class LoginForm extends Component {
   
@@ -11,10 +11,11 @@ export default class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.setState({vacio : 'd-none'})
+    this.setState({empty : 'd-none'})
+    this.setState({incorrect: 'd-none'})
 
     if(this.state.username.length === 0 || this.state.password.length === 0){
-      this.setState({vacio : 'text-danger'})
+      this.setState({empty : 'text-danger'})
     }
     else{
       fetch('http://localhost:8080/login', {
@@ -27,6 +28,9 @@ export default class LoginForm extends Component {
       .then(response => {
         if(response.status === 200){
           this.setState({login : true})
+        }
+        else if(response.status === 400){
+          this.setState({incorrect : 'text-danger'})
         }
         else{
           this.setState({error : true})
@@ -44,8 +48,8 @@ export default class LoginForm extends Component {
     this.state={
       username : '',
       password: '',
-      vacio: 'd-none',
-      incorrecto: 'd-none',
+      empty: 'd-none',
+      incorrect: 'd-none',
       error: false,
       errorMessage: "",
       login: false
@@ -56,18 +60,19 @@ export default class LoginForm extends Component {
     if(this.state.error){
       return(
         <div className="ms-5 mb-4">
-            <h1>Error al inciar sesión</h1>
+            <h4 className="text-muted">Error al iniciar sesión</h4>
         </div>
     )
     }
     else if(this.state.login){
+      
       return (<Navigate to={"/users/"+this.state.username} />);
     }
     else{
       return (
         <Form className="pe-5 ps-5 pb-5 pt-4">
-        <Form.Label className={this.state.vacio}>Debes rellenar todos los campos</Form.Label>
-        <Form.Label className={this.state.incorrecto}>Usuario o contraseña incorrectos</Form.Label>
+        <Form.Label className={this.state.empty}>Debes rellenar todos los campos</Form.Label>
+        <Form.Label className={this.state.incorrect}>Usuario o contraseña incorrectos</Form.Label>
         <Form.Group className="mb-3" controlId="username">
           <Form.Label>Usuario</Form.Label>
           <Form.Control name="username" type="text" onChange={this.handleChange}/>
@@ -77,6 +82,9 @@ export default class LoginForm extends Component {
           <Form.Label>Contraseña</Form.Label>
           <Form.Control name="password" type="password" onChange={this.handleChange}/>
         </Form.Group>
+        <Link to="/sign-up" style={{ textDecoration: 'none'}}>
+          <p className="d-block pt-1 pb-2 text-primary">Aún no estás registrado?</p>
+        </Link>
         <Button variant="primary" onClick={this.handleSubmit}>
           Iniciar sesión
         </Button>

@@ -23,7 +23,6 @@ function JoinGroupForm() {
             setEmpty("d-block text-danger")
         }
         else{
-            window.localStorage.setItem('user', 'sergio')
             const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+Group.groupId.toString()+'?type=add'
             fetch(url, {
                     method: 'PUT'

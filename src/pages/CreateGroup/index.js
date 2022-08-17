@@ -12,7 +12,7 @@ export default class SignupPage extends Component {
                 <SimpleNavBar />
             </nav>
             <div className="Content">
-                <Card>
+                <Card className="shadow">
                     <h2 className="pe-5 ps-5 pt-5">Crea un grupo</h2>
                     <CreateGroupForm />
                 </Card>

@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 import {Form, Button} from 'react-bootstrap'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
 export default class LoginForm extends Component {
   
@@ -82,6 +82,9 @@ export default class LoginForm extends Component {
           <Form.Label>Contraseña</Form.Label>
           <Form.Control name="password" type="password" onChange={this.handleChange}/>
         </Form.Group>
+        <Link to="/sign-up" style={{ textDecoration: 'none'}}>
+          <p className="d-block pt-1 pb-2 text-primary">Aún no estás registrado?</p>
+        </Link>
         <Button variant="primary" onClick={this.handleSubmit}>
           Iniciar sesión
         </Button>

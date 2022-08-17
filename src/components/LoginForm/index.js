@@ -65,7 +65,8 @@ export default class LoginForm extends Component {
     )
     }
     else if(this.state.login){
-      
+      window.localStorage.removeItem('user')
+      window.localStorage.setItem('user', this.state.username)
       return (<Navigate to={"/users/"+this.state.username} />);
     }
     else{

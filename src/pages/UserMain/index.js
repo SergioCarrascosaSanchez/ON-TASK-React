@@ -25,6 +25,7 @@ export default function UserMainPage(){
                 .then(data => {
                     if(data.groups.length > 0){
                         const groupArray = data.groups
+                        
                         fetch('http://localhost:8080/tasksOfuser/'+urlParam.username,{
                             method: "POST",
                             body: JSON.stringify({
@@ -40,6 +41,9 @@ export default function UserMainPage(){
                             setGroupIds(groupArray.sort())
                             setGroupNames(data.names);
                             setTasks(data.tasks);
+                            if(urlParam.username === window.localStorage.getItem("user")){
+                                window.localStorage.setItem("groups", groupArray)
+                            }
                             setLoading(false)
                             
                         })
@@ -134,8 +138,8 @@ export default function UserMainPage(){
                 <div className="content">
                     <h1 className="display-5"><span className="text-primary">{urlParam.username}</span></h1>
                     <Row>
-                        <Col className="col-4" >
-                            <h1 className="mt-4">Sus grupos</h1>
+                        <Col>
+                            <h1 className="mt-4">Sus grupos y tareas</h1>
                         </Col>
                     </Row>
                     {groupIds.map(id => <ListOfSimpleTasks key={"GroupId"+id} groupId={id} group={groupNames[id.toString()]} tasks={tasks[id.toString()]}/>)}

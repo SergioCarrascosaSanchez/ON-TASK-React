@@ -71,11 +71,9 @@ function CreateTaskForm() {
         if(users.includes(username)){
             const index = users.indexOf(username)
             users.splice(index, 1);
-            console.log(users)
         }
         else{
             users.push(username)
-            console.log(users)
         }
     }
 
@@ -140,9 +138,9 @@ function CreateTaskForm() {
                 <Row>
                     <p>Usuarios</p>
                 </Row>
-                <Row xs={2} s={3} md={5} className="gy-2 mb-4">
+                <Row xs={2} s={3} md={5} className="gy-2 mb-4 gx-5">
                     {usersAvalaible.map(user => 
-                        <Col onClick={() => handleOnClickUserButton(user["username"])}>
+                        <Col key={"Col"+user["username"]} onClick={() => handleOnClickUserButton(user["username"])}>
                             <UserButton key={"userBtn"+user["username"]} username={user["username"]}/>
                         </Col>)}
                 </Row>

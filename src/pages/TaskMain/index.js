@@ -21,12 +21,18 @@ function TaskMainPage() {
     const completedOnClick = () => {
         setLoading(true)
         fetch(deleteUrl, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem("token"),
+            }
         })
         .then(response => {
             if(response.status === 200){
                 setLoading(false)
                 navigate('/groups/'+window.localStorage.getItem('group'))
+            }
+            else if (response.status === 401){
+                navigate("/login")
             }
             else{
                 console.log(error)
@@ -42,7 +48,11 @@ function TaskMainPage() {
     }
 
     useEffect(() => {
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+            }
+        })
         .then(response => {
             if(response.status === 200){
                 response.json()
@@ -52,6 +62,9 @@ function TaskMainPage() {
                     setUsers(data.users.sort((a, b) => a.name.localeCompare(b.name)))
                     setLoading(false)
                 })
+            }
+            else if (response.status === 401){
+                navigate("/login")
             }
             else{
                 console.log(error)

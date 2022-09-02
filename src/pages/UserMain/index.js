@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import SimpleNavBar from '../../components/SimpleNavBar';
 import ListOfSimpleTasks from '../../components/ListOfSimpleTasks'
 import { Button, Spinner, Row, Col } from 'react-bootstrap';
@@ -13,10 +13,14 @@ export default function UserMainPage(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate()
     
     const fetchData = () => {
         fetch('http://localhost:8080/users/'+urlParam.username,{
                 method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                }
             }
         )
         .then(response => {
@@ -32,20 +36,28 @@ export default function UserMainPage(){
                                 groups: data.groups
                             }),
                             headers: {                              
-                                "Content-Type": "application/json"    
+                                "Content-Type": "application/json",
+                                'Authorization': 'Bearer ' + window.localStorage.getItem("token")   
                             }
                         }
                         )
-                        .then(response => response.json())
-                        .then(data => {
-                            setGroupIds(groupArray.sort())
-                            setGroupNames(data.names);
-                            setTasks(data.tasks);
-                            if(urlParam.username === window.localStorage.getItem("user")){
-                                window.localStorage.setItem("groups", groupArray)
+                        .then(response => {
+                            if (response.status === 401){
+                                navigate("/login")
                             }
-                            setLoading(false)
-                            
+                            else{
+                                response.json()
+                                .then(data => {
+                                    setGroupIds(groupArray.sort())
+                                    setGroupNames(data.names);
+                                    setTasks(data.tasks);
+                                    if(urlParam.username === window.localStorage.getItem("user")){
+                                        window.localStorage.setItem("groups", groupArray)
+                                    }
+                                    setLoading(false)
+                                    
+                                })
+                            }
                         })
                         .catch(error => {
                             console.log(error)
@@ -61,6 +73,9 @@ export default function UserMainPage(){
             else{
                 if(response.status === 404){
                     setErrorMessage("El usuario no ha sido encontrado")
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 setLoading(false)
                 setError(true)

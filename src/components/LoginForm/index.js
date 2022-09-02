@@ -27,7 +27,11 @@ export default class LoginForm extends Component {
       })
       .then(response => {
         if(response.status === 200){
-          this.setState({login : true})
+          response.json()
+          .then((data) => {
+            this.setState({login : true})
+            this.setState({token: data.token})
+          })
         }
         else if(response.status === 400){
           this.setState({incorrect : 'text-danger'})
@@ -52,7 +56,8 @@ export default class LoginForm extends Component {
       incorrect: 'd-none',
       error: false,
       errorMessage: "",
-      login: false
+      login: false,
+      token: ""
     }
   }
 
@@ -67,6 +72,8 @@ export default class LoginForm extends Component {
     else if(this.state.login){
       window.localStorage.removeItem('user')
       window.localStorage.setItem('user', this.state.username)
+      window.localStorage.removeItem('token')
+      window.localStorage.setItem('token', this.state.token)
       return (<Navigate to={"/users/"+this.state.username} />);
     }
     else{

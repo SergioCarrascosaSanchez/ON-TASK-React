@@ -44,13 +44,17 @@ function CreateTaskForm() {
                 method: 'POST',
                 body: JSON.stringify({name : title, description: description, group: group, users: users}),
                 headers: {                              
-                    "Content-Type": "application/json"    
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
                 }
             })
             .then(response => {
                 if(response.status === 201){
                     setLoading(false)
                     navigate('/groups/'+group)
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 else{
                     console.log(error)
@@ -85,7 +89,10 @@ function CreateTaskForm() {
         else{
             const url = "http://localhost:8080/groups/"+group
             fetch(url, {
-                    method: 'GET'
+                    method: 'GET',
+                    headers: {                              
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
+                    }
                 }
             ).then(response => {
                 if(response.status === 200){
@@ -94,6 +101,9 @@ function CreateTaskForm() {
                         setUsersAvalaible(data.users.sort((a, b) => a.name.localeCompare(b.name)))
                         setLoading(false)
                     })
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 else{
                     setLoading(false)

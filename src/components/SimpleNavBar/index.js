@@ -8,6 +8,7 @@ export default class SimpleNavBar extends Component {
     window.localStorage.removeItem('groups')
     window.localStorage.removeItem('user')
     window.localStorage.removeItem('group')
+    window.localStorage.removeItem('token')
   }
 
   render() {

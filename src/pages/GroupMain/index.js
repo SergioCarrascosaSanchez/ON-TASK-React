@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import SimpleNavBar from '../../components/SimpleNavBar';
 import { Button, Spinner, Row, Col, CardGroup } from 'react-bootstrap';
 import Usercard from '../../components/Usercard'
@@ -14,11 +14,15 @@ function GroupMainPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate()
 
     const fetchData = () => {
         const url = "http://localhost:8080/groups/"+urlParam.groupId
         fetch(url, {
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                }
             }
         ).then(response => {
             if(response.status === 200){
@@ -33,6 +37,9 @@ function GroupMainPage() {
             else{
                 if(response.status === 404){
                     setErrorMessage("El grupo no ha sido encontrado")
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 setLoading(false)
                 setError(true)

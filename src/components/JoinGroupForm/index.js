@@ -25,7 +25,11 @@ function JoinGroupForm() {
         else{
             const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+Group.groupId.toString()+'?type=add'
             fetch(url, {
-                    method: 'PUT'
+                    method: 'PUT',
+                    headers: {                              
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    }
                 }
             )
             .then(response => {
@@ -38,6 +42,9 @@ function JoinGroupForm() {
                 }
                 else if(response.status === 400){
                     setAlreadyIn('d-block text-danger')
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 else{
                     response.text().then(text => console.log(text))

@@ -7,7 +7,7 @@ function JoinGroupForm() {
     const [Group, setGroup] = useState("")
     const [Empty, setEmpty] = useState("d-none")
     const [Incorrect, setIncorrect] = useState("d-none")
-    let navigate = useNavigate()
+    const navigate = useNavigate()
     const Regex = /^[a-zA-Z0-9]+[a-zA-Z0-9 ]*$/
 
     const handleChange = (event) => {
@@ -29,7 +29,8 @@ function JoinGroupForm() {
                     method: 'POST',
                     body: JSON.stringify({name : Group.groupId.toString()}),
                     headers: {                              
-                        "Content-Type": "application/json"    
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     }
                 }
             )
@@ -41,12 +42,18 @@ function JoinGroupForm() {
                             const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+data.id.toString()+'?type=add'
                             fetch(url, {
                                     method: 'PUT',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                                    }
                                 }
                             )
                             .then(response => {
                                 if(response.status === 200){
                                     const urlUser = "/users/"+window.localStorage.getItem('user')
                                     navigate(urlUser)
+                                }
+                                else if (response.status === 401){
+                                    navigate("/login")
                                 }
                                 else{
                                     response.text().then(text => console.log(text))
@@ -56,6 +63,9 @@ function JoinGroupForm() {
                             navigate(urlUser)
                         }
                     )
+                }
+                else if (response.status === 401){
+                    navigate("/login")
                 }
                 else{
                     response.text().then(text => console.log(text))

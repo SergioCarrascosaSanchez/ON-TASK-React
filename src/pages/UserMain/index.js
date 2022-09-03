@@ -149,9 +149,6 @@ export default function UserMainPage(){
                     <Link to="/join-group">
                         <Button variant="outline-primary" className="me-4 mt-1">Unirse a un grupo</Button>
                     </Link>
-                    <div>
-                        {userContext.token}
-                    </div>
                 </div>
                 </>
             )

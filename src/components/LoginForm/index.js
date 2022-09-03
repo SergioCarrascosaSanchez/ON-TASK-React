@@ -1,9 +1,9 @@
 import React, { Component} from 'react'
 import {Form, Button} from 'react-bootstrap'
 import { Navigate, Link } from 'react-router-dom'
+import userLoginContext from '../../context/userLoginContext'
 
 export default class LoginForm extends Component {
-  
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -30,7 +30,8 @@ export default class LoginForm extends Component {
           response.json()
           .then((data) => {
             this.setState({login : true})
-            this.setState({token: data.token})
+            this.context.setUsername(this.state.username)
+            this.context.setToken(data.token)
           })
         }
         else if(response.status === 400){
@@ -57,9 +58,10 @@ export default class LoginForm extends Component {
       error: false,
       errorMessage: "",
       login: false,
-      token: ""
     }
   }
+
+  static contextType = userLoginContext;
 
   render() {
     if(this.state.error){
@@ -70,10 +72,10 @@ export default class LoginForm extends Component {
     )
     }
     else if(this.state.login){
-      window.localStorage.removeItem('user')
+      /*window.localStorage.removeItem('user')
       window.localStorage.setItem('user', this.state.username)
       window.localStorage.removeItem('token')
-      window.localStorage.setItem('token', this.state.token)
+      window.localStorage.setItem('token', this.state.token)*/
       return (<Navigate to={"/users/"+this.state.username} />);
     }
     else{

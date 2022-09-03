@@ -10,21 +10,27 @@ import CreateGroupPage from './pages/CreateGroup'
 import CreateTaskPage from './pages/CreateTask'
 import GroupMainPage from './pages/GroupMain';
 import TaskMainPage from './pages/TaskMain';
+import { UserLoginContextProvider } from './context/userLoginContext';
+import { CurrentContextProvider } from './context/currentContext';
 
 function App() {
   return (
-    <Routes>
-        <Route path ='/login' element={<LoginPage/>}></Route>
-        <Route exact path ='/sign-up' element={<SignupPage/>}></Route>
-        <Route exact path ='/' element={<MainPage/>}></Route>
-        <Route path='/users/:username' element={<UserMainPage/>}></Route>
-        <Route path='/tasks/:task' element={<TaskMainPage/>}></Route>
-        <Route path='/groups/:groupId' element={<GroupMainPage/>}></Route>
-        <Route path='/pruebas' element={<Prueba />}></Route>
-        <Route path='/join-group' element={<JoinGroupPage/>}></Route>
-        <Route path='/create-group' element={<CreateGroupPage/>}></Route>
-        <Route path='/create-task' element={<CreateTaskPage/>}></Route>
-      </Routes>
+    <UserLoginContextProvider>
+    <CurrentContextProvider>
+      <Routes>
+          <Route path ='/login' element={<LoginPage/>}></Route>
+          <Route exact path ='/sign-up' element={<SignupPage/>}></Route>
+          <Route exact path ='/' element={<MainPage/>}></Route>
+          <Route path='/users/:username' element={<UserMainPage/>}></Route>
+          <Route path='/tasks/:task' element={<TaskMainPage/>}></Route>
+          <Route path='/groups/:groupId' element={<GroupMainPage/>}></Route>
+          <Route path='/pruebas' element={<Prueba />}></Route>
+          <Route path='/join-group' element={<JoinGroupPage/>}></Route>
+          <Route path='/create-group' element={<CreateGroupPage/>}></Route>
+          <Route path='/create-task' element={<CreateTaskPage/>}></Route>
+        </Routes>
+      </CurrentContextProvider>
+      </UserLoginContextProvider>
   );
 }
 

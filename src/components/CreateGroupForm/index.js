@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import userLoginContext from '../../context/userLoginContext'
 
 function JoinGroupForm() {
+
+    const userContext = useContext(userLoginContext)
+
     const [Group, setGroup] = useState("")
     const [Empty, setEmpty] = useState("d-none")
     const [Incorrect, setIncorrect] = useState("d-none")
@@ -30,7 +34,8 @@ function JoinGroupForm() {
                     body: JSON.stringify({name : Group.groupId.toString()}),
                     headers: {                              
                         "Content-Type": "application/json",
-                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                        'Authorization': 'Bearer ' + userContext.token
+                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     }
                 }
             )
@@ -39,17 +44,20 @@ function JoinGroupForm() {
                     response.json()
                     .then(
                         data => {
-                            const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+data.id.toString()+'?type=add'
+                            const url = 'http://localhost:8080/users/'+userContext.username+'/groups/'+data.id.toString()+'?type=add'
+                            //const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+data.id.toString()+'?type=add'
                             fetch(url, {
                                     method: 'PUT',
                                     headers: {
-                                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                                        'Authorization': 'Bearer ' + userContext.token
+                                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                                     }
                                 }
                             )
                             .then(response => {
                                 if(response.status === 200){
-                                    const urlUser = "/users/"+window.localStorage.getItem('user')
+                                    const urlUser = "/users/"+userContext.username
+                                    //const urlUser = "/users/"+window.localStorage.getItem('user')
                                     navigate(urlUser)
                                 }
                                 else if (response.status === 401){
@@ -59,8 +67,6 @@ function JoinGroupForm() {
                                     response.text().then(text => console.log(text))
                                 }
                             })
-                            const urlUser = "/users/"+window.localStorage.getItem('user')
-                            navigate(urlUser)
                         }
                     )
                 }

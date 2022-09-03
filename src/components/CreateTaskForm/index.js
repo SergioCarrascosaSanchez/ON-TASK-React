@@ -1,12 +1,18 @@
-import React, { useEffect, useState  } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Form, Row, Col, Button, Spinner} from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import SimpleNavBar from "../SimpleNavBar";
 import UserButton from "../UserButton";
+import CurrentContext from '../../context/currentContext'
+import UserLoginContext from "../../context/userLoginContext";
 
 function CreateTaskForm() {
 
-    const group = window.localStorage.getItem("group")
+    const userContext = useContext(UserLoginContext)
+    const currentContext = useContext(CurrentContext)
+    const group = currentContext.group
+    //const group = window.localStorage.getItem("group")
+
     const navigate = useNavigate()
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -45,7 +51,8 @@ function CreateTaskForm() {
                 body: JSON.stringify({name : title, description: description, group: group, users: users}),
                 headers: {                              
                     "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
+                    'Authorization': 'Bearer ' + userContext.token
+                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
                 }
             })
             .then(response => {
@@ -91,7 +98,8 @@ function CreateTaskForm() {
             fetch(url, {
                     method: 'GET',
                     headers: {                              
-                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
+                        'Authorization': 'Bearer ' + userContext.token
+                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
                     }
                 }
             ).then(response => {

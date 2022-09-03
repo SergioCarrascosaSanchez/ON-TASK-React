@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import SimpleNavBar from '../../components/SimpleNavBar';
-import { Button, Spinner, Row, Col, CardGroup } from 'react-bootstrap';
+import { Button, Spinner, Row, Col} from 'react-bootstrap';
 import Usercard from '../../components/Usercard'
 import './styles.css'
 import SimpleTask from '../../components/SimpleTask';
+import UserLoginContext from '../../context/userLoginContext';
+import CurrentContext from '../../context/currentContext'
 
 function GroupMainPage() {
+
+    const userContext = useContext(UserLoginContext)
+    const currentContext = useContext(CurrentContext)
 
     const [name, setName] = useState("")
     const [users, setUsers] = useState([])
@@ -21,7 +26,8 @@ function GroupMainPage() {
         fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    'Authorization': 'Bearer ' + userContext.token
+                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                 }
             }
         ).then(response => {
@@ -54,7 +60,10 @@ function GroupMainPage() {
     }
 
     const urlParam = useParams();
-    window.localStorage.setItem("group", urlParam.groupId)
+
+    currentContext.setGroup(urlParam.groupId)
+    //window.localStorage.setItem("group", urlParam.groupId)
+
     useEffect(() => {
         setLoading(true)
         fetchData()
@@ -81,7 +90,8 @@ function GroupMainPage() {
         )
     }
     else{
-        if(window.localStorage.getItem("groups").split(',').includes(urlParam.groupId)){
+        if(userContext.groups.includes(parseInt(urlParam.groupId))){
+        //if(window.localStorage.getItem("groups").split(',').includes(urlParam.groupId)){
             return(
             <>
                 <SimpleNavBar/>
@@ -123,8 +133,9 @@ function GroupMainPage() {
                         </Col>
                     </Row>
                     <Row xs={1} md={4} className="gy-2">
-                        {tasks.map(task => 
-                            <Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", urlParam.groupId)}}>
+                        {tasks.map(task =>
+                            <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
+                            {/*<Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", urlParam.groupId)}}>*/}
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>
@@ -167,7 +178,8 @@ function GroupMainPage() {
                     </Row>
                     <Row xs={1} md={4} className="gy-2">
                         {tasks.map(task => 
-                            <Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", this.state.groupId)}}>
+                            <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
+                            {/*<Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", urlParam.groupId)}}>*/}
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>

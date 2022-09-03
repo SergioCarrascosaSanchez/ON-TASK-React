@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, createContext} from 'react'
 
-const currentContext = React.createContext({})
+const CurrentContext = createContext()
 
-export function currentContextProvider({children}){
+export function CurrentContextProvider({children}){
     const[group, setGroup] = useState('')
 
     return (
-        <Context.Provider value={{group, setGroup}}>
+        <CurrentContext.Provider value={{group, setGroup}}>
             {children}
-        </Context.Provider>
+        </CurrentContext.Provider>
     )
 }
 
-export default currentContext
+export default CurrentContext

@@ -10,13 +10,13 @@ import CreateGroupPage from './pages/CreateGroup'
 import CreateTaskPage from './pages/CreateTask'
 import GroupMainPage from './pages/GroupMain';
 import TaskMainPage from './pages/TaskMain';
-import { userLoginContextProvider } from './context/userLoginContext';
-import { currentContextProvider } from './context/currentContext';
+import { UserLoginContextProvider } from './context/userLoginContext';
+import { CurrentContextProvider } from './context/currentContext';
 
 function App() {
   return (
-    <userLoginContextProvider>
-    <currentContextProvider>
+    <UserLoginContextProvider>
+    <CurrentContextProvider>
       <Routes>
           <Route path ='/login' element={<LoginPage/>}></Route>
           <Route exact path ='/sign-up' element={<SignupPage/>}></Route>
@@ -29,8 +29,8 @@ function App() {
           <Route path='/create-group' element={<CreateGroupPage/>}></Route>
           <Route path='/create-task' element={<CreateTaskPage/>}></Route>
         </Routes>
-      </currentContextProvider>
-      </userLoginContextProvider>
+      </CurrentContextProvider>
+      </UserLoginContextProvider>
   );
 }
 

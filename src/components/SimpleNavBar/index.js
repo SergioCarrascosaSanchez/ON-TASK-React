@@ -23,9 +23,19 @@ export default function SimpleNavBar(){
   const profileLink = () => {
     if(userContext.username !== ""){
       return(
-        <Link to={"/users/"+userContext.username}>
-          <Icon.PersonCircle color="white" size={25} className=""/>
-        </Link>
+        <>
+          <div className="d-inline">
+            <Link to={"/users/"+userContext.username}>
+              <Icon.PersonCircle color="white" size={30}/>
+            </Link>
+          </div>
+          <Navbar.Text  className="d-inline ms-3 strong align-text-top" onClick={handleLogout}>
+            <Link to="/" style={{ textDecoration: 'none', color:'white', fontWeight: "bold" }}>
+              CERRAR SESIÓN
+            </Link>
+          </Navbar.Text>
+        </>
+        
       )
     }
     else{
@@ -42,12 +52,9 @@ export default function SimpleNavBar(){
               <span className="navbarBrand">ON TASK</span>
             </Link>
           </Navbar.Brand>
+          <div className="me-5">
           {profileLink()}
-          <Navbar.Text className="d-flex me-5" onClick={handleLogout}>
-            <Link to="/" style={{ textDecoration: 'none', color:'white' }}>
-              Log out
-            </Link>
-          </Navbar.Text>
+          </div>
         </div>
       </Navbar>
   )

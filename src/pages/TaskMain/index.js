@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Row, Col, Button, Spinner} from 'react-bootstrap'
 import SimpleNavBar from '../../components/SimpleNavBar'
 import UserCard from '../../components/Usercard'
 import './styles.css'
+import UserLoginContext from "../../context/userLoginContext";
+import CurrentContext from "../../context/currentContext";
 
 function TaskMainPage() {
+    const userContext = useContext(UserLoginContext)
+    const currentContext = useContext(CurrentContext)
+
     const urlParams = useParams()
+
+    const navigate = useNavigate()
+
     const url = 'http://localhost:8080/tasks/'+urlParams.task+'?type=complete'
-    const deleteUrl = 'http://localhost:8080/tasks/'+urlParams.task+'/groups/'+window.localStorage.getItem('group')
+    const deleteUrl = 'http://localhost:8080/tasks/'+urlParams.task+'/groups/'+currentContext.group
+    //const deleteUrl = 'http://localhost:8080/tasks/'+urlParams.task+'/groups/'+window.localStorage.getItem('group')
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -16,20 +25,20 @@ function TaskMainPage() {
     const [description, setDescription] = useState("")
     const [users, setUsers] = useState([])
 
-    const navigate = useNavigate()
-
     const completedOnClick = () => {
         setLoading(true)
         fetch(deleteUrl, {
             method: 'DELETE',
             headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem("token"),
+                'Authorization': 'Bearer ' + userContext.token
+                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
             }
         })
         .then(response => {
             if(response.status === 200){
                 setLoading(false)
-                navigate('/groups/'+window.localStorage.getItem('group'))
+                navigate('/groups/'+currentContext.group)
+                //navigate('/groups/'+window.localStorage.getItem('group'))
             }
             else if (response.status === 401){
                 navigate("/login")
@@ -50,7 +59,8 @@ function TaskMainPage() {
     useEffect(() => {
         fetch(url, {
             headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                'Authorization': 'Bearer ' + userContext.token
+                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
             }
         })
         .then(response => {
@@ -99,7 +109,8 @@ function TaskMainPage() {
         )
     }
     else{
-        if(!users.map(user => user.username).includes(window.localStorage.getItem("user"))){
+        if(!users.map(user => user.username).includes(userContext.username)){
+        //if(!users.map(user => user.username).includes(window.localStorage.getItem("user"))){
             return (
                 <>
                 <SimpleNavBar/>

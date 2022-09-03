@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import SimpleNavBar from '../../components/SimpleNavBar';
 import ListOfSimpleTasks from '../../components/ListOfSimpleTasks'
 import { Button, Spinner, Row, Col } from 'react-bootstrap';
+import UserLoginContext from '../../context/userLoginContext';
 import './styles.css' 
 
 export default function UserMainPage(){
     
+    const userContext = useContext(UserLoginContext)
+
     const [groupIds, setGroupIds] = useState([]);
     const [groupNames, setGroupNames] = useState({});
     const [tasks, setTasks] = useState({});
@@ -19,7 +22,8 @@ export default function UserMainPage(){
         fetch('http://localhost:8080/users/'+urlParam.username,{
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    'Authorization': 'Bearer ' + userContext.token
+                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                 }
             }
         )
@@ -37,7 +41,8 @@ export default function UserMainPage(){
                             }),
                             headers: {                              
                                 "Content-Type": "application/json",
-                                'Authorization': 'Bearer ' + window.localStorage.getItem("token")   
+                                'Authorization': 'Bearer ' + userContext.token
+                                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")   
                             }
                         }
                         )
@@ -51,9 +56,12 @@ export default function UserMainPage(){
                                     setGroupIds(groupArray.sort())
                                     setGroupNames(data.names);
                                     setTasks(data.tasks);
-                                    if(urlParam.username === window.localStorage.getItem("user")){
-                                        window.localStorage.setItem("groups", groupArray)
+                                    if(urlParam.username === userContext.username){
+                                        userContext.setGroups(groupArray)
                                     }
+                                    /*if(urlParam.username === window.localStorage.getItem("user")){
+                                        window.localStorage.setItem("groups", groupArray)
+                                    }*/
                                     setLoading(false)
                                     
                                 })
@@ -116,7 +124,8 @@ export default function UserMainPage(){
         )
     }
     else if(groupIds.length === 0){
-        if(urlParam.username !== window.localStorage.getItem("user")){
+        if(urlParam.username !== userContext.username){
+        //if(urlParam.username !== window.localStorage.getItem("user")){
             return(
                 <>
                 <SimpleNavBar/>
@@ -140,13 +149,17 @@ export default function UserMainPage(){
                     <Link to="/join-group">
                         <Button variant="outline-primary" className="me-4 mt-1">Unirse a un grupo</Button>
                     </Link>
+                    <div>
+                        {userContext.token}
+                    </div>
                 </div>
                 </>
             )
         }
     }
     else{
-        if(urlParam.username !== window.localStorage.getItem("user")){
+        if(urlParam.username !== userContext.username){
+        //if(urlParam.username !== window.localStorage.getItem("user")){
             return(
                 <>
                 <SimpleNavBar/>

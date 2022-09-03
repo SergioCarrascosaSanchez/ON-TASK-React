@@ -59,8 +59,6 @@ function JoinGroupForm() {
                                     response.text().then(text => console.log(text))
                                 }
                             })
-                            const urlUser = "/users/"+window.localStorage.getItem('user')
-                            navigate(urlUser)
                         }
                     )
                 }

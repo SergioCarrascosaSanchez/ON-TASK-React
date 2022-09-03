@@ -1,9 +1,12 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import UserLoginContext from "../../context/userLoginContext";
 
 function JoinGroupForm() {
+
+    const userContext = useContext(UserLoginContext)
     const [Group, setGroup] = useState("")
     const [Empty, setEmpty] = useState("d-none")
     const [Incorrect, setIncorrect] = useState("d-none")
@@ -23,18 +26,21 @@ function JoinGroupForm() {
             setEmpty("d-block text-danger")
         }
         else{
-            const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+Group.groupId.toString()+'?type=add'
+            const url = 'http://localhost:8080/users/'+userContext.username+'/groups/'+Group.groupId.toString()+'?type=add'
+            //const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+Group.groupId.toString()+'?type=add'
             fetch(url, {
                     method: 'PUT',
                     headers: {                              
                         "Content-Type": "application/json",
-                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                        'Authorization': 'Bearer ' + userContext.token
+                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     }
                 }
             )
             .then(response => {
                 if(response.status === 200){
-                    const urlUser = "/users/"+window.localStorage.getItem('user')
+                    const urlUser = "/users/"+userContext.username
+                    //const urlUser = "/users/"+window.localStorage.getItem('user')
                     navigate(urlUser)
                 }
                 else if(response.status === 404){

@@ -110,7 +110,7 @@ function GroupMainPage() {
                         </Col>
                         <Col className="d-flex align-items-start col-10">
                             <Link to={"/edit-group/"+urlParam.groupId}>
-                                <Button variant="outline-primary" className="mb-4">Editar grupo</Button>
+                                <Button variant="outline-primary" className="mb-4 d-none">Editar grupo</Button>
                             </Link>
                         </Col>
                     </Row>

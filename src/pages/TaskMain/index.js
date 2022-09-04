@@ -152,7 +152,7 @@ function TaskMainPage() {
                         </Col>
                         <Col>
                             <Link to={"/edit-task/"+urlParams.task}>
-                                <Button variant="outline-primary" className="mb-4">Editar tarea</Button>
+                                <Button variant="outline-primary" className="mb-4 d-none">Editar tarea</Button>
                             </Link>
                         </Col>
                     </Row>

@@ -11,6 +11,7 @@ function JoinGroupForm() {
     const [Group, setGroup] = useState("")
     const [Empty, setEmpty] = useState("d-none")
     const [Incorrect, setIncorrect] = useState("d-none")
+    const [Error, setError] = useState("d-none")
     const navigate = useNavigate()
     const Regex = /^[a-zA-Z0-9]+[a-zA-Z0-9 ]*$/
 
@@ -21,6 +22,7 @@ function JoinGroupForm() {
     const handleSubmit = () => {
         setEmpty("d-none")
         setIncorrect("d-none")
+        setError("d-none")
         if(Group === ''){
             setEmpty("d-block text-danger")
         }
@@ -73,6 +75,9 @@ function JoinGroupForm() {
                 else if (response.status === 401){
                     navigate("/login")
                 }
+                else if (response.status === 400){
+                    setError("d-block text-danger")
+                }
                 else{
                     response.text().then(text => console.log(text))
                 }
@@ -84,7 +89,7 @@ function JoinGroupForm() {
         <Form className="pe-5 ps-5 pb-5 pt-4">
             <Form.Label className={Empty}>Debes rellenar todos los campos</Form.Label>
             <Form.Label className={Incorrect}>El nombre del grupo no es válido, solo puedes usar letras y números</Form.Label>
-
+            <Form.Label className={Error}>El nombre del grupo ya esta en uso</Form.Label>
             <Form.Group className="mb-3" controlId="groupId">
                 <Form.Label>Nombre del grupo</Form.Label>
                 <Form.Control name="groupId" type="text" onChange={handleChange}/>

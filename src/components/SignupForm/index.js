@@ -101,8 +101,8 @@ export default class SignupForm extends Component {
         return(
         <div className="ms-5 mb-5 mt-3">
             <h4 className="text-primary mb-4">Usuario registrado con éxito</h4>
-            <Link to={'/users/'+this.state.username}>
-              <Button>Ir a mi perfil</Button>
+            <Link to={'/login'}>
+              <Button>Iniciar sesión</Button>
             </Link>
         </div>
         )

@@ -60,9 +60,8 @@ function GroupMainPage() {
 
     const urlParam = useParams();
 
-    currentContext.setGroup(urlParam.groupId)
-
     useEffect(() => {
+        currentContext.setGroup(urlParam.groupId)
         setLoading(true)
         fetchData()
     }, [])
@@ -131,7 +130,7 @@ function GroupMainPage() {
                     </Row>
                     <Row xs={1} md={4} className="gy-2">
                         {tasks.map(task =>
-                            <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
+                            <Col key={"Col"+task["id"]}> 
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>
@@ -174,7 +173,7 @@ function GroupMainPage() {
                     </Row>
                     <Row xs={1} md={4} className="gy-2">
                         {tasks.map(task => 
-                            <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
+                            <Col key={"Col"+task["id"]}> 
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>

@@ -27,7 +27,6 @@ function GroupMainPage() {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + userContext.token
-                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                 }
             }
         ).then(response => {
@@ -62,7 +61,6 @@ function GroupMainPage() {
     const urlParam = useParams();
 
     currentContext.setGroup(urlParam.groupId)
-    //window.localStorage.setItem("group", urlParam.groupId)
 
     useEffect(() => {
         setLoading(true)
@@ -91,7 +89,6 @@ function GroupMainPage() {
     }
     else{
         if(userContext.groups.includes(parseInt(urlParam.groupId))){
-        //if(window.localStorage.getItem("groups").split(',').includes(urlParam.groupId)){
             return(
             <>
                 <SimpleNavBar/>
@@ -135,7 +132,6 @@ function GroupMainPage() {
                     <Row xs={1} md={4} className="gy-2">
                         {tasks.map(task =>
                             <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
-                            {/*<Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", urlParam.groupId)}}>*/}
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>
@@ -179,7 +175,6 @@ function GroupMainPage() {
                     <Row xs={1} md={4} className="gy-2">
                         {tasks.map(task => 
                             <Col key={"Col"+task["id"]} onClick={() => {currentContext.setGroup(urlParam.groupId)}}> 
-                            {/*<Col key={"Col"+task["id"]} onClick={() => {window.localStorage.setItem("group", urlParam.groupId)}}>*/}
                                 <Link key={"SimpleTask"+task["id"]} to={'/tasks/'+task["id"]} style={{ textDecoration: 'none', color:'black' }}>
                                     <SimpleTask key={"Task"+task["id"]} id={task["id"]} title={task["name"]} description={task["description"]}/>
                                 </Link>

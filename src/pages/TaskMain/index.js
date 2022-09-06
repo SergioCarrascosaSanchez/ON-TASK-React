@@ -17,7 +17,6 @@ function TaskMainPage() {
 
     const url = 'http://localhost:8080/tasks/'+urlParams.task+'?type=complete'
     const deleteUrl = 'http://localhost:8080/tasks/'+urlParams.task+'/groups/'+currentContext.group
-    //const deleteUrl = 'http://localhost:8080/tasks/'+urlParams.task+'/groups/'+window.localStorage.getItem('group')
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -31,14 +30,12 @@ function TaskMainPage() {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + userContext.token
-                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
             }
         })
         .then(response => {
             if(response.status === 200){
                 setLoading(false)
                 navigate('/groups/'+currentContext.group)
-                //navigate('/groups/'+window.localStorage.getItem('group'))
             }
             else if (response.status === 401){
                 navigate("/login")
@@ -60,7 +57,6 @@ function TaskMainPage() {
         fetch(url, {
             headers: {
                 'Authorization': 'Bearer ' + userContext.token
-                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
             }
         })
         .then(response => {
@@ -110,7 +106,6 @@ function TaskMainPage() {
     }
     else{
         if(!users.map(user => user.username).includes(userContext.username)){
-        //if(!users.map(user => user.username).includes(window.localStorage.getItem("user"))){
             return (
                 <>
                 <SimpleNavBar/>

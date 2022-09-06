@@ -23,7 +23,6 @@ export default function UserMainPage(){
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + userContext.token
-                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                 }
             }
         )
@@ -41,8 +40,7 @@ export default function UserMainPage(){
                             }),
                             headers: {                              
                                 "Content-Type": "application/json",
-                                'Authorization': 'Bearer ' + userContext.token
-                                //'Authorization': 'Bearer ' + window.localStorage.getItem("token")   
+                                'Authorization': 'Bearer ' + userContext.token  
                             }
                         }
                         )
@@ -59,9 +57,6 @@ export default function UserMainPage(){
                                     if(urlParam.username === userContext.username){
                                         userContext.setGroups(groupArray)
                                     }
-                                    /*if(urlParam.username === window.localStorage.getItem("user")){
-                                        window.localStorage.setItem("groups", groupArray)
-                                    }*/
                                     setLoading(false)
                                     
                                 })
@@ -125,7 +120,6 @@ export default function UserMainPage(){
     }
     else if(groupIds.length === 0){
         if(urlParam.username !== userContext.username){
-        //if(urlParam.username !== window.localStorage.getItem("user")){
             return(
                 <>
                 <SimpleNavBar/>
@@ -156,7 +150,6 @@ export default function UserMainPage(){
     }
     else{
         if(urlParam.username !== userContext.username){
-        //if(urlParam.username !== window.localStorage.getItem("user")){
             return(
                 <>
                 <SimpleNavBar/>

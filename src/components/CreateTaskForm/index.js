@@ -11,7 +11,6 @@ function CreateTaskForm() {
     const userContext = useContext(UserLoginContext)
     const currentContext = useContext(CurrentContext)
     const group = currentContext.group
-    //const group = window.localStorage.getItem("group")
 
     const navigate = useNavigate()
     const [title, setTitle] = useState("")
@@ -51,8 +50,7 @@ function CreateTaskForm() {
                 body: JSON.stringify({name : title, description: description, group: group, users: users}),
                 headers: {                              
                     "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + userContext.token
-                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
+                    'Authorization': 'Bearer ' + userContext.token   
                 }
             })
             .then(response => {
@@ -98,8 +96,7 @@ function CreateTaskForm() {
             fetch(url, {
                     method: 'GET',
                     headers: {                              
-                        'Authorization': 'Bearer ' + userContext.token
-                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")    
+                        'Authorization': 'Bearer ' + userContext.token    
                     }
                 }
             ).then(response => {

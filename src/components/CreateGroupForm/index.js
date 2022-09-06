@@ -37,7 +37,6 @@ function JoinGroupForm() {
                     headers: {                              
                         "Content-Type": "application/json",
                         'Authorization': 'Bearer ' + userContext.token
-                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     }
                 }
             )
@@ -47,19 +46,16 @@ function JoinGroupForm() {
                     .then(
                         data => {
                             const url = 'http://localhost:8080/users/'+userContext.username+'/groups/'+data.id.toString()+'?type=add'
-                            //const url = 'http://localhost:8080/users/'+window.localStorage.getItem('user')+'/groups/'+data.id.toString()+'?type=add'
                             fetch(url, {
                                     method: 'PUT',
                                     headers: {
                                         'Authorization': 'Bearer ' + userContext.token
-                                        //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                                     }
                                 }
                             )
                             .then(response => {
                                 if(response.status === 200){
                                     const urlUser = "/users/"+userContext.username
-                                    //const urlUser = "/users/"+window.localStorage.getItem('user')
                                     navigate(urlUser)
                                 }
                                 else if (response.status === 401){

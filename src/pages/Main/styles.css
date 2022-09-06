@@ -1,0 +1,76 @@
+nav{
+    margin: 0;
+}
+.navbarBrand{
+    margin-left: 10vw;
+    font-size: 2.7vh;
+    font-weight: bold;
+}
+.rowSytle{
+    margin-top: 7vw;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+}
+.h1MAIN{
+    font-size: 7vh !important;
+    font-weight: bold !important;
+    margin-bottom: 4vh !important;
+}
+
+.spanMAIN{ 
+    font-weight: bold !important;
+}
+.pMAIN{
+    font-size: 3.5vh !important;
+    margin-bottom: 4vh !important;
+}
+@media (min-width: 820px) { 
+    img{
+        width: 85%;
+        height: 85%
+    }
+}
+
+@media (max-width: 820px) {
+    img{
+        width: 490px;
+        height: 358px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top: 6vw;
+        margin-bottom: 10vh;
+        display: block;
+    }
+    h1{
+        font-size: 6vh;
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+    p{
+        font-size: 1.7vh;
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+    .buttons{
+        margin-left: 14px;
+    }
+}
+
+@media (max-width: 486px) {
+    img{
+        width: 342px;
+        height: 251px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top: 6vw;
+        margin-bottom: 10vh;
+        display: block;
+    }
+    h1{
+        font-size: 4.6vh;
+    }
+    p{
+        font-size: 1.5vh;
+    }
+}
